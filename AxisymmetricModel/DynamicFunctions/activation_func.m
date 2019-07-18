@@ -10,9 +10,7 @@ function [ At] = activation_func( t, Ta, Tc, eps_fed, kp )
     At = 0*t;  
 	At(tr <= Ta) = ( sin(pi*tr(tr <= Ta)/Ta) ).^d;
     
-    %temporarily only activate the first time
-%     if t > Tc
-%         At = 0;
-%     end
+
 end
+
 

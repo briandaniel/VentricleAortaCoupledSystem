@@ -1,11 +1,9 @@
-run modelParameters.m
 
 addpath('AxisymmetricModel')
 addpath('AxisymmetricModel\KinematicFunctions')
 addpath('AxisymmetricModel\DynamicFunctions')
 addpath('AxisymmetricModel/KinematicFunctions')
 addpath('AxisymmetricModel/DynamicFunctions')
-
 
 
 %%
@@ -36,6 +34,7 @@ paramLV.kav = 5e4; % dyne/cm^2 * s               % Coefficient of the viscous co
 paramLV.kp = 0;                                 % Coefficient of the end-diastolic response (pre-load dependent active stress)
 paramLV.ked = 0.0;                              % Coefficient of the end-diastolic response (pre-load dependent active stress)
 paramLV.m = 0.3;                                % Slope of the stress/strain relationship in the active fibers
+paramLV.eps_fed = 0.0; % This can/should be adjusted
 
 % Viscosity
 paramLV.kv = 0.1 * 10^4; % Converted from kPa*s to dyne/cm^2 * s
@@ -46,13 +45,25 @@ paramLV.bff = 2.5;
 paramLV.bfx = 2.5;
 paramLV.bxx = 2.5;
 
+
+% Alternative activation (two-hill curve)
+paramLV.useTwoHill = 1; % Set to 1 if you want to use the activation function
+paramLV.m1 = 5.32;
+paramLV.m2 = 8;
+paramLV.tau1 = 0.10;
+paramLV.tau2 = 0.3;
+paramLV.Ts = 0.4;
+[tMax,paramLV.hillMaxVal] = computeHillMax( paramLV.m1, paramLV.m2, paramLV.tau1, paramLV.tau2, paramLV.Tc);
+
+% Plot the activation curves
+t = linspace(0,2,1e3);
+[ At] = activation_func( t, paramLV.Ta, paramLV.Tc, 0, paramLV.kp );
+At2 = twoHillActivation( t, paramLV.m1, paramLV.m2, paramLV.tau1, paramLV.tau2, paramLV.Tc, paramLV.Ts, paramLV.hillMaxVal );
+plot(t,At,t,At2);
+
+
 % Assign to main parameter struct
 param.paramLV = paramLV;
-
-
-
-
-
 
 
 

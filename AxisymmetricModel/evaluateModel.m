@@ -46,19 +46,23 @@ function [ alpha, kappa, eta, dVda, Vlv ] = evaluateModel( a1, a2, a3, t, paramL
     [ ell, ell0, dell_da1, dell_da2, dell_da3 ]  = ...
                 ell_derivative( subel, paramLV, paramLV.a0, a1, a2, a3, omega );
 
-    % Compute end-diastolic fiber strain        
-    eps_fed = 0.0; % This can/should be adjusted
-    At = activation_func( t, paramLV.Ta, paramLV.Tc, eps_fed, paramLV.kp );
-
+    % Compute end-diastolic fiber strain 
+    if(paramLV.useTwoHill == 1)
+        At = twoHillActivation( t, paramLV.m1, paramLV.m2, paramLV.tau1, paramLV.tau2, paramLV.Tc, paramLV.Ts, paramLV.hillMaxVal );
+    else
+        At = activation_func( t, paramLV.Ta, paramLV.Tc, paramLV.eps_fed, paramLV.kp );
+    end
+    
+    
     % Active fiber stress function  
     [ Sf_const ] = active_fiber_stress_constant( At, paramLV.km, paramLV.ked, paramLV.m, ...
-                                         ell, ell0, eps_fed, sps, cps, F );
+                                         ell, ell0, paramLV.eps_fed, sps, cps, F );
     [ Sf_a1 ] = active_fiber_stress( At, paramLV.kav, paramLV.ked, paramLV.m, ...
-                                         ell, ell0, eps_fed, dell_da1, sps, cps, F );
+                                         ell, ell0, paramLV.eps_fed, dell_da1, sps, cps, F );
     [ Sf_a2 ] = active_fiber_stress( At, paramLV.kav, paramLV.ked, paramLV.m, ...
-                                         ell, ell0, eps_fed, dell_da2, sps, cps, F );
+                                         ell, ell0, paramLV.eps_fed, dell_da2, sps, cps, F );
     [ Sf_a3 ] = active_fiber_stress( At, paramLV.kav, paramLV.ked, paramLV.m, ...
-                                         ell, ell0, eps_fed, dell_da3, sps, cps, F );
+                                         ell, ell0, paramLV.eps_fed, dell_da3, sps, cps, F );
 
     % Traction integral
     [eta1, eta2] = traction_integral( subel, paramLV, nu_vec, paramLV.a0, a1, a2  );

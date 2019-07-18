@@ -81,22 +81,52 @@ paramAO.xi = 8;
 
 
 
-paramAO.xdata = [5, 35];
-paramAO.Edata = [1, 1]*4*10^6;
-paramAO.A0data = [4.5, 1];
+paramAO.xdata = [5, 40];
+paramAO.Edata = [1, 1]*8*10^6;
+paramAO.A0data = [6.5, 3];
 paramAO.h0data = [1, 1]*0.16;
 paramAO.mudata = [1, 1]*0.04;
 
 
 
+paramAO.coarct_pos = 20;
+paramAO.coarct_width = 10;
+paramAO.coarct_area_change =0;
+paramAO.coarct_E_change = 0*10^6;
 
-[ paramAO.alpha, paramAO.A0, paramAO.R0, paramAO.E, paramAO.mu ] = alpha_A0_func_linear( paramAO.x, paramAO );
-[ paramAO.alpha_mid, paramAO.A0_mid, paramAO.R0_mid, paramAO.E_mid, paramAO.mu_mid ] = alpha_A0_func_linear( paramAO.xmid, paramAO );
+
+[ paramAO.alpha, paramAO.A0, paramAO.R0, paramAO.E, paramAO.mu ] = alpha_A0_func_linear_coarct( paramAO.x, paramAO );
+% [ paramAO.alpha, paramAO.A0, paramAO.R0, paramAO.E, paramAO.mu ] = alpha_A0_func_linear( paramAO.x, paramAO );
+[ paramAO.alpha_mid, paramAO.A0_mid, paramAO.R0_mid, paramAO.E_mid, paramAO.mu_mid ] = alpha_A0_func_linear_coarct( paramAO.xmid, paramAO );
+
+figure('outerposition',[1500,100,600,1100]);
+subplot(4,1,1)
+hold on
+plot(paramAO.xmid, paramAO.A0_mid)
+plot(paramAO.x, paramAO.A0)
+title('Area')
+
+subplot(4,1,2)
+hold on
+plot(paramAO.xmid, paramAO.E_mid)
+plot(paramAO.x, paramAO.E)
+title('Elasticity')
+
+subplot(4,1,3)
+hold on
+plot(paramAO.xmid, paramAO.alpha_mid)
+plot(paramAO.x, paramAO.alpha)
+title('alpha')
+
+subplot(4,1,4)
+hold on
+plot(paramAO.xmid, paramAO.R0_mid)
+plot(paramAO.x, paramAO.R0)
+title('R0')
+
+
 paramAO.Zc_downstream = sqrt( paramAO.alpha(end) * param.rho )/(paramAO.A0(end)*sqrt(2));
-% paramAO.Zc_downstream = 100;
 param.paramAO = paramAO;
-
-plot(paramAO.alpha)
 
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
@@ -105,7 +135,7 @@ plot(paramAO.alpha)
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%% Lump models %%%%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 % Upstream/downstream conditions
 param.Ppv = 10 * 1333.3; % mmHg converted to dyne/cm^2
-param.Psp = 40 * 1333.3; % mmHg converted to dyne/cm^2
+param.Psp = 50 * 1333.3; % mmHg converted to dyne/cm^2
 
 % Left atrium windkessel
 paramLA.C = 4.5e-3; % (mL) / (0.1Pa)
@@ -113,8 +143,8 @@ paramLA.R = 5; % (0.1Pa) / (mL/s)
 param.paramLA = paramLA;
 
 % Systemic artery windkessel
-paramSA.C = 0.001;
-paramSA.R = 250; % (dyne/cm^2) / (mL/s) 
+paramSA.C = 0.01;
+paramSA.R = 550; % (dyne/cm^2) / (mL/s) 
 
 % paramSA.C = 1e-3;
 % paramSA.R = 5; % (dyne/cm^2) / (mL/s) 

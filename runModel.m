@@ -2,8 +2,16 @@
 clear all
 close all
 
-run modelParameters.m
-run LVparameters.m
+
+% run modelParameters1.m
+% run LVparameters1.m
+
+% run modelParameters2.m
+% run LVparameters2.m
+
+run modelParameters3.m
+run LVparameters3.m
+
 
 %%
 
@@ -13,7 +21,7 @@ imgIdx = 1;
 % Time domain
 Nc = 10;
 tmax = param.T*Nc;
-dt = 0.001;
+dt = 0.0005;
 t = 0;
 
 Nstep = tmax/dt;
@@ -93,7 +101,7 @@ Vlvot_vec = Vlvot0;
 
 %%
 close all
-figure('outerposition',[ 100, 25, 2300, 1400 ])
+figure('outerposition',[ 500, 25, 1600, 1000 ])
 sp1a  = subplot('position',[0.05,0.8,0.25,0.15]);
 sp1b  = subplot('position',[0.05,0.6,0.25,0.15]);
 sp2 = subplot('position',[0.35,0.6,0.6,0.35]);
