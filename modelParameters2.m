@@ -70,7 +70,7 @@ param.paramLVOT = paramLVOT;
 
 %%%%%%%%%%%%%%%%%%%%%%%%%%%%% AO parameters %%%%%%%%%%%%%%%%%%%%%%%%%%%%%
 paramAO.xbnd = [0,45]; % cm
-paramAO.dx = 1; % cm
+paramAO.dx = 0.1; % cm
 paramAO.x = ( paramAO.xbnd(1):paramAO.dx:paramAO.xbnd(2) )';
 paramAO.xmid = ( ( paramAO.xbnd(1) + paramAO.dx/2 ):paramAO.dx:(paramAO.xbnd(2) - paramAO.dx/2) )';
 paramAO.Nx = length(paramAO.x);
@@ -89,9 +89,9 @@ paramAO.mudata = [1, 1]*0.04;
 
 
 
-paramAO.coarct_pos = 20;
-paramAO.coarct_width = 10;
-paramAO.coarct_area_change =4;
+paramAO.coarct_pos = 10;
+paramAO.coarct_width = 4;
+paramAO.coarct_area_change =5;
 paramAO.coarct_E_change = 8*10^6;
 
 

@@ -6,11 +6,11 @@ close all
 % run modelParameters1.m
 % run LVparameters1.m
 
-% run modelParameters2.m
-% run LVparameters2.m
+run modelParameters2.m
+run LVparameters2.m
 
-run modelParameters3.m
-run LVparameters3.m
+% run modelParameters3.m
+% run LVparameters3.m
 
 
 %%
@@ -188,9 +188,10 @@ for k = 2:Nstep
 %                  param.paramAO.x+param.paramLVOT.x(end),U_AO(:,2))
 %             title(['k = ',num2str(k),'    t = ', num2str(t)])
 %             ylabel('u [cm/s]')
-            Plvot = param.paramLVOT.alpha.*( sqrt( U_LVOT(:,1)./ param.paramLVOT.A0 ) - 1 );
-            Pao = param.paramAO.alpha.*( sqrt( U_AO(:,1)./ param.paramAO.A0 ) - 1 );
-            plot(param.paramLVOT.x,Plvot/1333,param.paramAO.x+param.paramLVOT.x(end),Pao/1333)
+%             Plvot = param.paramLVOT.alpha.*( sqrt( U_LVOT(:,1)./ param.paramLVOT.A0 ) - 1 );
+%             Pao = param.paramAO.alpha.*( sqrt( U_AO(:,1)./ param.paramAO.A0 ) - 1 );
+%             plot(param.paramLVOT.x,Plvot/1333,param.paramAO.x+param.paramLVOT.x(end),Pao/1333)
+plot(param.paramAO.x,param.paramAO.A0,param.paramAO.x,U_AO(:,1))
             xlabel('x [cm]')
             set(gca,'ylim',[-10,180])
             set(gca,'xlim',[0,param.paramLVOT.x(end)+param.paramAO.x(end)])
